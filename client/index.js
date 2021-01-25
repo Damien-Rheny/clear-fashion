@@ -32,11 +32,16 @@ console.log(MY_FAVORITE_BRANDS[0]);
 // 0. I have 3 favorite brands stored in MY_FAVORITE_BRANDS variable
 // 1. Create a new variable and assign it the link of the cheapest t-shirt
 // I can find on these e-shops
+/*45
+https://hopaal.com/collections/t-shirts-homme/products/classique-forest-t-shirt-homme
+20
+https://www.loom.fr/products/le-t-shirt
+25
+https://adresse.paris/e-shop/4262-t-shirt-villette-1300000261968.html#/82-taille_fastmag-xs/751-couleur-gris_bleu_26
+*/
+const cheapestTshirt="https://www.loom.fr/products/le-t-shirt";
 // 2. Log the variable
-
-
-
-
+console.log(cheapestTshirt);
 
 /**
  * 👕
@@ -51,18 +56,39 @@ console.log(MY_FAVORITE_BRANDS[0]);
 // 1. Create a variable and assign it the number of products
 // 2. Log the variable
 
+const numberOfProducts=marketplace.length
+console.log(numberOfProducts);
 
 // 🎯 TODO: Brands name
 // 1. Create a variable and assign it the list of brands name only
+var listOfBrands=[];
+for (var i in marketplace)
+{
+    listOfBrands.push(marketplace[i].brand);
+}
+function Unicity(value,index,self)
+{
+  return self.indexOf(value)==index;
+}
+listOfBrands=listOfBrands.filter(Unicity);
 // 2. Log the variable
-// 3. Log how many brands we have
 
+console.log(listOfBrands);
+// 3. Log how many brands we have
+console.log(listOfBrands.length);
 
 // 🎯 TODO: Sort by price
 // 1. Create a function to sort the marketplace products by price
-// 2. Create a variable and assign it the list of products by price from lowest to highest
+/*function SortByPrice(self)
+{  
+    var sorting = self.sort((a, b) => (a.price > b.price) ? 1 : -1)
+    return sorting
+}
+*/
+// 2. Create a variable and assign it the list of products by price from lowest to highest 
+//var sortingPrice = marketplace.SortByPrice();
 // 3. Log the variable
-
+//console.log(sortingPrice);
 
 // 🎯 TODO: Sort by date
 // 1. Create a function to sort the marketplace objects by products date
@@ -72,9 +98,21 @@ console.log(MY_FAVORITE_BRANDS[0]);
 
 // 🎯 TODO: Filter a specific price range
 // 1. Filter the list of products between 50€ and 100€
+function Product50_100(value,index,marketplace)
+{
+  if (50<=marketplace[index].price)
+  {
+    if(100>=marketplace[index].price)
+    {
+      return true;
+    }
+  }
+  return false;
+}
 // 2. Log the list
 
-
+var produits_50_100 = marketplace.filter(Product50_100(marketplace))
+console.log(produits_50_100);
 // 🎯 TODO: Average Basket
 // 1. Determine the average basket of the marketplace
 // 2. Log the average
