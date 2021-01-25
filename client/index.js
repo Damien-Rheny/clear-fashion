@@ -202,7 +202,7 @@ console.log(average_basket)
 
 
 const p90 = 0.9*Math.round(marketplace.length);
-console.log(ind,listProductsSortByPrice[p90])
+console.log(listProductsSortByPrice[p90])
 
 
 
@@ -277,13 +277,13 @@ const COTELE_PARIS = [
 // 🎯 TODO: New released products
 // // 1. Log if we have new products only (true or false)
 // // A new product is a product `released` less than 2 weeks.
-var jour = new Date(Date.prototype.getFullYear(),Date.prototype.getMonth(),Date.prototype.getDate());
+/*var jour = new Date(Date.prototype.getFullYear(),Date.prototype.getMonth(),Date.prototype.getDate());
 
 var w2 = (14*24*60*60*1000);//two weeks in miliseconds
 
 const newproduct = (element) => Date.parse(jour) - Date.parse(element.released) < w2;
 console.log(COTELE_PARIS.some(newproduct));
-
+*/
 // 🎯 TODO: Reasonable price
 // // 1. Log if coteleparis is a reasonable price shop (true or false)
 // // A reasonable price if all the products are less than 100€
