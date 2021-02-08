@@ -2,13 +2,16 @@
 const dedicatedbrand = require('./sources/dedicatedbrand');
 const adresse= require('./sources/adresse');
 const mudjeans= require('./sources/mudjeans');
+const Readline = require('readline'); // for reading inputs
+const fs = require('fs');
 //https://www.dedicatedbrand.com/en/men/news
 //https://adresse.paris/602-nouveautes
 //https://mudjeans.eu/collections/men-buy-jeans
 
 // CHoisir quel site puis parcourir tous les url
 let AllProducts = [];
-/*async function sandbox (eshop) {
+
+async function dedicated () {
   try {
 
     const pages = await dedicatedbrand.getPages('https://www.dedicatedbrand.com')
@@ -24,26 +27,18 @@ let AllProducts = [];
       NombreProduit+=products.length;
       AllProducts.push(products);
     }
-    
-    /*for (var i = 0; i<AllProducts.length; i++){
-      NombreProduit+=AllProducts[i].length;
-    }*//*
-    console.log("Nombre de produit total :",NombreProduit);
-    //console.log(:woman_detective:  browsing ${eshop} source;
 
-    //const products = await dedicatedbrand.scrape(eshop);
-    /*
-    const products = await mudjeans.scrape(eshop);
-    console.log(products);
-    *//*
+    console.log("Nombre de produit total :",NombreProduit);
+    
     console.log('done');
     process.exit(0);
   } catch (e) {
     console.error(e);
     process.exit(1);
   }
-}*/
-/*async function sandbox (eshop) {
+}
+
+async function mdjeans () {
   try {
 
     const pages = await mudjeans.getPages('https://www.mudjeans.eu')
@@ -62,7 +57,7 @@ let AllProducts = [];
     
     /*for (var i = 0; i<AllProducts.length; i++){
       NombreProduit+=AllProducts[i].length;
-    }*//*
+    }*/
     console.log("Nombre de produit total :",NombreProduit);
     //console.log(:woman_detective:  browsing ${eshop} source;
 
@@ -70,16 +65,15 @@ let AllProducts = [];
     /*
     const products = await mudjeans.scrape(eshop);
     console.log(products);
-    *//*
+    */
     console.log('done');
     process.exit(0);
   } catch (e) {
     console.error(e);
     process.exit(1);
-  }
 }
-*/
-async function sandbox (eshop) {
+
+async function adress() {
   try {
 
     const products = await adresse.scrape('https://adresse.paris/630-toute-la-collection')
@@ -97,5 +91,25 @@ async function sandbox (eshop) {
 }
 const [,, eshop] = process.argv;
 
-sandbox(eshop);
+const rl = Readline.createInterface({ // for reading inputs
+    input : process.stdin,
+    output : process.stdout,
+    terminal : false
+})
+
+console.log("Which website do you want to scrap ? 1 - Adresse Paris | 2 - Dedicated Brand | 3 - Mud Jeans")
+
+rl.on('line', (input) => {
+  console.log(`Received: ${input}`);
+  if(input == 1){
+    adress();
+  }
+  if(input == 2){
+    dedicated();
+  }
+  if(input == 3){
+    mdjeans();
+  }
+});
+
 //
