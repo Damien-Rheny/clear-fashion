@@ -4,6 +4,8 @@ const adresse= require('./sources/adresse');
 const mudjeans= require('./sources/mudjeans');
 const Readline = require('readline'); // for reading inputs
 const fs = require('fs');
+const db = require('./db/index');
+
 //https://www.dedicatedbrand.com/en/men/news
 //https://adresse.paris/602-nouveautes
 //https://mudjeans.eu/collections/men-buy-jeans
@@ -28,15 +30,16 @@ async function dedicated () {
       AllProducts.push(products);
     }
 
+    const result = await db.insert(AllProducts);
+
     console.log("Nombre de produit total :",NombreProduit);
 
     let data = JSON.stringify(AllProducts);
     fs.writeFileSync('dedicated.json', data);
     console.log('done');
-    process.exit(0);
   } catch (e) {
     console.error(e);
-    process.exit(1);
+
   }
 }
 
@@ -51,6 +54,7 @@ async function mdjeans () {
     for (var i = 0; i<pages.length; i++){
       console.log(pages[i]);
       const products = await mudjeans.scrape(pages[i]);
+      const result = await db.insert(products);
       console.log(products);
       console.log("Nombre de produits dans la page :",products.length)
       NombreProduit+=products.length;
@@ -82,10 +86,8 @@ async function mdjeans () {
     fs.writeFileSync('mdjeans.json', data);
     
     console.log('done');
-    process.exit(0);
   } catch (e) {
     console.error(e);
-    process.exit(1);
   }
 } 
 
@@ -96,16 +98,17 @@ async function adress() {
 
     console.log(products);
 
+    const result = await db.insert(products);
+
     console.log("Nombre de produit total :",products.length);
 
     let data = JSON.stringify(products);
     fs.writeFileSync('address.json', data);
 
     console.log('done');
-    process.exit(0);
   } catch (e) {
     console.error(e);
-    process.exit(1);
+    
   }
 }
 
@@ -132,9 +135,3 @@ rl.on('line', (input) => {
     mdjeans();
   }
 });
-
-const node = require ('./node');
-const collection = node.db.collection('products');
-const result = collection.insertMany(AllProducts);
-
-console.log(result);
