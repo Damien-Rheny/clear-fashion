@@ -132,3 +132,9 @@ rl.on('line', (input) => {
     mdjeans();
   }
 });
+
+const node = require ('./node');
+const collection = node.db.collection('products');
+const result = collection.insertMany(AllProducts);
+
+console.log(result);
