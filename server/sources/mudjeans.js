@@ -6,7 +6,7 @@ const MUD_JEANS = "https://mudjeans.eu";
  * @param  {String} data - html response
  * @return {Array} products
  */
-const parse = data => {
+/*const parse = data => {
   const $ = cheerio.load(data);
 
   return $('.shopify-section.collection__landing .col.col-xs-6.col-md-3')
@@ -30,8 +30,43 @@ const parse = data => {
           .replace(",",".")                  
           )
       ;
+      const brand = "mudjeans"
+      return {brand,name, price,lease};
+    })
+    .get();
+};*/
+const parse = data => {
+  const $ = cheerio.load(data);
 
-      return {name, price,lease};
+  return $('.shopify-section.collection__landing .col.col-xs-6.col-md-3')
+    .map((i, element) => {
+
+      const brand = 'mudjeans';
+      const name = $(element)
+        .find('.product-title')
+        .text()
+        .trim()
+        .replace(/\s/g, ' ');
+      const price = parseInt($(element)
+          .find('.product-price:first-child')
+          .text()
+          .replace(",00\n","").replace("Buy","").replace("€","")       
+          )
+      ;
+      const lease = parseFloat($(element)
+          .find('.product-price:nth-child(2)')
+          .text()
+          .replace("Lease for €","")
+          .replace(",",".")                  
+          )
+      ;
+      let photo = $(element)
+        .find('.img.img--wrapper')
+        .find("img")
+        .attr("src");
+
+      photo = "https:" + photo
+      return {brand,name, price,lease,photo};
     })
     .get();
 };

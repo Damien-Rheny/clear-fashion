@@ -9,21 +9,25 @@ const cheerio = require('cheerio');
 const parse = data => {
   const $ = cheerio.load(data);
 
-  return $('.product_list.grid.row .product-container .right-block')
+  return $('.product_list.grid.row .product-container')
     .map((i, element) => {
       
       const name = $(element)
-        .find('.product-name-container.versionmob .product-name')
+        .find('.right-block .product-name-container.versionmob .product-name')
         .text()
         .trim()
         .replace(/\s/g, ' ');
       const price = parseInt(
         $(element)
-          .find('.price.product-price')
+          .find('.right-block .price.product-price')
           .text()
       );
+      const brand = "adresse"
+      const photo = $(element)
+        .find('.left-block .product-image-container .product_img_link .replace-2x.img-responsive.lazy.img_0.img_1e')
+        .attr('data-original');
 
-      return {name, price};
+      return {brand,name, price,photo};
     })
     .get();
 };

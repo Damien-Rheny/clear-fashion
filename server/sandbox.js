@@ -24,13 +24,15 @@ async function dedicated () {
     for (var i = 0; i<pages.length; i++){
       console.log(pages[i]);
       const products = await dedicatedbrand.scrape(pages[i]);
+      const result = await db.insert(products);
       console.log(products);
       console.log("Nombre de produits dans la page :",products.length)
       NombreProduit+=products.length;
-      AllProducts.push(products);
-    }
-
-    const result = await db.insert(AllProducts);
+      /*for(var i = 0;i<NombreProduit;i++){
+        AllProducts.push(products[i])
+      }*/
+      //AllProducts.push(products);
+    }    
 
     console.log("Nombre de produit total :",NombreProduit);
 
@@ -45,7 +47,7 @@ async function dedicated () {
 
 async function mdjeans () {
   try {
-
+    let AllMudJeans = []
     const pages = await mudjeans.getPages('https://www.mudjeans.eu')
 
     console.log(pages);
@@ -58,30 +60,17 @@ async function mdjeans () {
       console.log(products);
       console.log("Nombre de produits dans la page :",products.length)
       NombreProduit+=products.length;
-      AllProducts.push(products);
+      /*for(var i = 0;i<NombreProduit;i++){
+        AllProducts.push(products[i])
+        AllMudJeans.push(products[i])
+      }*/
+      
+      
     }
-    
-    /*for (var i = 0; i<AllProducts.length; i++){
-      NombreProduit+=AllProducts[i].length;
-    }*/
+    //console.log(AllMudJeans)
+    //const result = await db.insert(AllMudJeans)
     console.log("Nombre de produit total :",NombreProduit);
-    //console.log(:woman_detective:  browsing ${eshop} source;
 
-    //const products = await dedicatedbrand.scrape(eshop);
-    /*
-    const products = await mudjeans.scrape(eshop);
-    console.log(products);
-    */
-
-    /*for (var i = 0; i<AllProducts.length-1; i++){
-      let data = JSON.stringify(AllProducts[i]);
-      fs.writeFileSync('mdjeans.json', data);
-    }*/ 
-    /*
-    for (var i = 0; i<AllProducts.length-1; i++){
-      fs.writeFileSync('mdjeans.json', JSON.stringify(AllProducts[i]) + "\n");
-    }
-    */
     let data = JSON.stringify(AllProducts);
     fs.writeFileSync('mdjeans.json', data);
     
@@ -97,7 +86,9 @@ async function adress() {
     const products = await adresse.scrape('https://adresse.paris/630-toute-la-collection')
 
     console.log(products);
-
+    /*for(var i = 0;i<products.length;i++){
+        AllProducts.push(products[i])
+    }*/
     const result = await db.insert(products);
 
     console.log("Nombre de produit total :",products.length);
@@ -121,7 +112,7 @@ const rl = Readline.createInterface({ // for reading inputs
     terminal : false
 })
 
-console.log("Which website do you want to scrap ? 1 - Adresse Paris | 2 - Dedicated Brand | 3 - Mud Jeans");
+console.log("Which website do you want to scrap ? 1 - Adresse Paris | 2 - Dedicated Brand | 3 - Mud Jeans | 4 - All");
 
 rl.on('line', (input) => {
   console.log(`Received: ${input}`);
@@ -133,5 +124,11 @@ rl.on('line', (input) => {
   }
   if(input == 3){
     mdjeans();
+  }
+  if(input==4)
+  {
+    adress();
+    mdjeans();
+    dedicated();
   }
 });

@@ -29,9 +29,9 @@ const parse = data => {
           .text()
           .trim()
           .replace(/\s/g, ' '),
-        'photo': $(element)
+        'photo': "https:" + $(element)
           .find('noscript img.product_card__image')
-          .attr('src'),
+          .attr('src'),        
         '_id': uuidv5(link, uuidv5.URL)
       };
     })

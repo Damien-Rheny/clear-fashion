@@ -6,23 +6,6 @@ const db = require('./db');
 async function sandbox () {
   try {
     let products = [];
-    let pages = [
-      'https://www.dedicatedbrand.com/en/men/basics',
-      'https://www.dedicatedbrand.com/en/men/sale'
-    ];
-
-    console.log(`🕵️‍♀️  browsing ${pages.length} pages with for...of`);
-
-    // Way 1 with for of: we scrape page by page
-    for (let page of pages) {
-      console.log(`🕵️‍♀️  scraping ${page}`);
-
-      let results = await dedicatedbrand.scrape(page);
-
-      console.log(`👕 ${results.length} products found`);
-
-      products.push(results);
-    }
 
     pages = [
       'https://www.loom.fr/collections/hauts',
